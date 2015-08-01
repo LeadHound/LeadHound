@@ -23500,6 +23500,8 @@
 
 	var _reflux2 = _interopRequireDefault(_reflux);
 
+	var _reactRouter = __webpack_require__(158);
+
 	module.exports = _react2['default'].createClass({
 	  displayName: 'exports',
 
@@ -23510,7 +23512,7 @@
 	    };
 	  },
 	  componentWillMount: function componentWillMount() {
-	    _actionsJsx2['default'].getLogin();
+	    // Actions.getLogin();
 	  },
 	  render: function render() {
 	    return _react2['default'].createElement(
@@ -23524,11 +23526,19 @@
 	    return _react2['default'].createElement(
 	      'div',
 	      null,
-	      this.state.login
-	    ); //passing image to this.props
+	      _react2['default'].createElement(
+	        'a',
+	        { href: '/auth/github' },
+	        'Login with Github'
+	      )
+	    );
 	  },
 	  onChange: function onChange(event, login) {
 	    this.setState({ login: login });
+	  },
+	  getLoginInfo: function getLoginInfo() {
+	    console.log("calling login info");
+	    _actionsJsx2['default'].getLogin();
 	  }
 	});
 
@@ -25126,11 +25136,12 @@
 	module.exports = _reflux2['default'].createStore({
 	  listenables: [_actionsJsx2['default']], //if any actions get called and you have a method with the same call, call the method
 	  getLogin: function getLogin() {
-	    return _utilsApiJsx2['default'].get('login').then((function (json) {
+	    return _utilsApiJsx2['default'].get('auth/github').then((function (json) {
 	      this.login = json;
 	      this.triggerChange();
 	    }).bind(this));
 	  },
+
 	  triggerChange: function triggerChange() {
 	    this.trigger('change', this.login);
 	    //broadcasting to the entire app, event and info we want to share
