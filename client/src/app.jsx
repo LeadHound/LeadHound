@@ -1,5 +1,4 @@
-var React = require('react');
+import React from 'react';
+import Routes from './routes.jsx';
 
-
-
-React.render(<p>Test</p>, document.body);
+React.render(Routes, document.body);
