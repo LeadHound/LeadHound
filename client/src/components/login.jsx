@@ -2,6 +2,7 @@ import React from 'react';
 import Actions from '../actions.jsx';
 import LoginStore from '../stores/test.jsx';
 import Reflux from 'reflux';
+import { DefaultRoute, Link, Route, Router, RouteHandler } from 'react-router';
 
 module.exports = React.createClass({
   mixins: [
@@ -9,11 +10,11 @@ module.exports = React.createClass({
   ],
   getInitialState: function () {
     return {
-        login: [] 
+        login: []
     };
   },
   componentWillMount: function() {
-    Actions.getLogin();
+    // Actions.getLogin();
   },
   render: function() {
     return <div>
@@ -23,10 +24,14 @@ module.exports = React.createClass({
   },
   renderLogin: function() {
     return <div>
-      {this.state.login}
-    </div> //passing image to this.props
+      <a href="/auth/github">Login with Github</a>
+    </div>
   },
   onChange: function(event, login) {
     this.setState({login: login})
+  },
+  getLoginInfo: function() {
+    console.log("calling login info")
+    Actions.getLogin();
   }
 })
