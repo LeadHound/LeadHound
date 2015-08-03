@@ -11,12 +11,10 @@ module.exports = function(passport) {
     //   have a database of user records, the complete GitHub profile is serialized
     //   and deserialized.
     passport.serializeUser(function(user, done) {
-      console.log("serializeUser", user)
-      done(null, user);
+      done(null, user.id);
     });
 
     passport.deserializeUser(function(obj, done) {
-      console.log("deserailzeObj")
       done(null, obj);
     });
 
@@ -33,7 +31,8 @@ module.exports = function(passport) {
       function(accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
         process.nextTick(function () {
-
+          // console.log("accessToken: ", accessToken);
+          // console.log("profile: ", profile);
           // To keep the example simple, the user's GitHub profile is returned to
           // represent the logged-in user.  In a typical application, you would want
           // to associate the GitHub account with a user record in your database,
@@ -50,6 +49,9 @@ module.exports = function(passport) {
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 module.exports.ensureAuthenticated = function(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/')
-}
+  if (req.path === '/auth/github') {
+    return next();
+  }else{
+    return req.isAuthenticated() ? next() : res.send(403);
+  }
+};

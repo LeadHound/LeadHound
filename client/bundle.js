@@ -23463,9 +23463,30 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(158);
+
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+
+	var _routesJsx = __webpack_require__(157);
+
+	var _routesJsx2 = _interopRequireDefault(_routesJsx);
+
+	var _storesTestJsx = __webpack_require__(211);
+
+	var _storesTestJsx2 = _interopRequireDefault(_storesTestJsx);
+
 	exports['default'] = _react2['default'].createClass({
 	  displayName: 'main',
 
+	  mixins: [_reactRouter.Navigation],
+
+	  componentWillMount: function componentWillMount() {
+	    console.log("intercepting transition path");
+	    console.log('isLogedIn', _storesTestJsx2['default'].isLoggedIn());
+	    if (!_storesTestJsx2['default'].isLoggedIn()) {
+	      this.transitionTo('/login');
+	    }
+	  },
 	  render: function render() {
 	    return _react2['default'].createElement(
 	      'div',
@@ -23554,7 +23575,7 @@
 
 	var _reflux2 = _interopRequireDefault(_reflux);
 
-	module.exports = _reflux2['default'].createActions(['getLogin']);
+	module.exports = _reflux2['default'].createActions(['getLogin', 'isLoggedIn']);
 
 /***/ },
 /* 191 */
@@ -25135,16 +25156,9 @@
 
 	module.exports = _reflux2['default'].createStore({
 	  listenables: [_actionsJsx2['default']], //if any actions get called and you have a method with the same call, call the method
-	  getLogin: function getLogin() {
-	    return _utilsApiJsx2['default'].get('auth/github').then((function (json) {
-	      this.login = json;
-	      this.triggerChange();
-	    }).bind(this));
-	  },
-
-	  triggerChange: function triggerChange() {
-	    this.trigger('change', this.login);
-	    //broadcasting to the entire app, event and info we want to share
+	  isLoggedIn: function isLoggedIn() {
+	    var cookie = document.cookie.slice(0, 4) || "";
+	    return cookie === 'user';
 	  }
 	});
 
