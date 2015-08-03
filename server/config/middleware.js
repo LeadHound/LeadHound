@@ -16,15 +16,15 @@ module.exports = function(app, express) {
   app.use(passport.session());
   authController(passport);
 
-  app.all("*", authController.ensureAuthenticated);
-  app.get('/', authController.ensureAuthenticated);
-
   app.get('/auth/github', passport.authenticate('github'));
 
   app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/' }),
     function(req, res) {
       // Successful authentication, redirect home.
-      res.redirect('/');
+      res.cookie('user', JSON.stringify(req.user.id)).redirect('/');
     });
+
+  app.all("*", authController.ensureAuthenticated);
+  app.get('/', authController.ensureAuthenticated);
 };
