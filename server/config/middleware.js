@@ -5,7 +5,6 @@ var morgan = require('morgan'),
     expressSession = require('cookie-session');
     authController = require('../api/auth/authController');
     userController = require('../database/collections/userController.js');
-    // userController = require('../database/dbconfig.js');
 
 module.exports = function(app, express) {
 
@@ -20,7 +19,6 @@ module.exports = function(app, express) {
 
   app.get('/auth/github', passport.authenticate('github'));
 
-  app.get('/table', userController.createTable);
   app.post('/user', userController.createUser);
 
   app.get('/auth/github/callback',
