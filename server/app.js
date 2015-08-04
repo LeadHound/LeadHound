@@ -1,13 +1,8 @@
 var express = require('express');
 var app = express();
-var db = require('./database/dbconfig.js')
-
-
-
-// client.query(UserModel.userTableString);
+var db = require('./database/dbconfig.js');
 
 app.use(express.static('client'));
-
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
@@ -18,6 +13,3 @@ var server = app.listen(3000, function () {
 
 require('./config/middleware.js')(app, express);
 
-// console.log("app client", client);
-
-// module.exports = client;
