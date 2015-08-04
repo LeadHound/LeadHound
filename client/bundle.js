@@ -20457,7 +20457,7 @@
 
 	var _componentsMainJsx2 = _interopRequireDefault(_componentsMainJsx);
 
-	var _componentsLoginJsx = __webpack_require__(213);
+	var _componentsLoginJsx = __webpack_require__(189);
 
 	var _componentsLoginJsx2 = _interopRequireDefault(_componentsLoginJsx);
 
@@ -23471,7 +23471,7 @@
 
 	var _routesJsx2 = _interopRequireDefault(_routesJsx);
 
-	var _storesTestJsx = __webpack_require__(189);
+	var _storesTestJsx = __webpack_require__(211);
 
 	var _storesTestJsx2 = _interopRequireDefault(_storesTestJsx);
 
@@ -23505,23 +23505,61 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _reflux = __webpack_require__(190);
+	var _react = __webpack_require__(1);
 
-	var _reflux2 = _interopRequireDefault(_reflux);
+	var _react2 = _interopRequireDefault(_react);
 
-	var _utilsApiJsx = __webpack_require__(210);
-
-	var _utilsApiJsx2 = _interopRequireDefault(_utilsApiJsx);
-
-	var _actionsJsx = __webpack_require__(212);
+	var _actionsJsx = __webpack_require__(190);
 
 	var _actionsJsx2 = _interopRequireDefault(_actionsJsx);
 
-	module.exports = _reflux2['default'].createStore({
-	  listenables: [_actionsJsx2['default']], //if any actions get called and you have a method with the same call, call the method
-	  isLoggedIn: function isLoggedIn() {
-	    var cookie = document.cookie.slice(0, 4) || "";
-	    return cookie === 'user';
+	var _storesTestJsx = __webpack_require__(211);
+
+	var _storesTestJsx2 = _interopRequireDefault(_storesTestJsx);
+
+	var _reflux = __webpack_require__(191);
+
+	var _reflux2 = _interopRequireDefault(_reflux);
+
+	var _reactRouter = __webpack_require__(158);
+
+	module.exports = _react2['default'].createClass({
+	  displayName: 'exports',
+
+	  mixins: [_reflux2['default'].listenTo(_storesTestJsx2['default'], 'onChange')],
+	  getInitialState: function getInitialState() {
+	    return {
+	      login: []
+	    };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    // Actions.getLogin();
+	  },
+	  render: function render() {
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
+	      'Login Page',
+	      this.renderLogin()
+	    );
+	  },
+	  renderLogin: function renderLogin() {
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
+	      _react2['default'].createElement(
+	        'a',
+	        { href: '/auth/github' },
+	        'Login with Github'
+	      )
+	    );
+	  },
+	  onChange: function onChange(event, login) {
+	    this.setState({ login: login });
+	  },
+	  getLoginInfo: function getLoginInfo() {
+	    console.log("calling login info");
+	    _actionsJsx2['default'].getLogin();
 	  }
 	});
 
@@ -23529,37 +23567,51 @@
 /* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(191);
+	'use strict';
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _reflux = __webpack_require__(191);
+
+	var _reflux2 = _interopRequireDefault(_reflux);
+
+	module.exports = _reflux2['default'].createActions(['getLogin', 'isLoggedIn']);
 
 /***/ },
 /* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports.ActionMethods = __webpack_require__(205);
-
-	exports.ListenerMethods = __webpack_require__(193);
-
-	exports.PublisherMethods = __webpack_require__(203);
-
-	exports.StoreMethods = __webpack_require__(202);
-
-	exports.createAction = __webpack_require__(206);
-
-	exports.createStore = __webpack_require__(198);
-
-	exports.connect = __webpack_require__(207);
-
-	exports.connectFilter = __webpack_require__(192);
-
-	exports.ListenerMixin = __webpack_require__(204);
-
-	exports.listenTo = __webpack_require__(208);
-
-	exports.listenToMany = __webpack_require__(209);
+	module.exports = __webpack_require__(192);
 
 
-	var maker = __webpack_require__(197).staticJoinCreator;
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports.ActionMethods = __webpack_require__(206);
+
+	exports.ListenerMethods = __webpack_require__(194);
+
+	exports.PublisherMethods = __webpack_require__(204);
+
+	exports.StoreMethods = __webpack_require__(203);
+
+	exports.createAction = __webpack_require__(207);
+
+	exports.createStore = __webpack_require__(199);
+
+	exports.connect = __webpack_require__(208);
+
+	exports.connectFilter = __webpack_require__(193);
+
+	exports.ListenerMixin = __webpack_require__(205);
+
+	exports.listenTo = __webpack_require__(209);
+
+	exports.listenToMany = __webpack_require__(210);
+
+
+	var maker = __webpack_require__(198).staticJoinCreator;
 
 	exports.joinTrailing = exports.all = maker("last"); // Reflux.all alias for backward compatibility
 
@@ -23569,7 +23621,7 @@
 
 	exports.joinConcat = maker("all");
 
-	var _ = exports.utils = __webpack_require__(194);
+	var _ = exports.utils = __webpack_require__(195);
 
 	exports.EventEmitter = _.EventEmitter;
 
@@ -23629,7 +23681,7 @@
 	/**
 	 * Provides the set of created actions and stores for introspection
 	 */
-	exports.__keep = __webpack_require__(199);
+	exports.__keep = __webpack_require__(200);
 
 	/**
 	 * Warn if Function.prototype.bind not available
@@ -23644,12 +23696,12 @@
 
 
 /***/ },
-/* 192 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ListenerMethods = __webpack_require__(193),
-	    ListenerMixin = __webpack_require__(204),
-	    _ = __webpack_require__(194);
+	var ListenerMethods = __webpack_require__(194),
+	    ListenerMixin = __webpack_require__(205),
+	    _ = __webpack_require__(195);
 
 	module.exports = function(listenable, key, filterFunc) {
 	    filterFunc = _.isFunction(key) ? key : filterFunc;
@@ -23690,11 +23742,11 @@
 
 
 /***/ },
-/* 193 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(194),
-	    maker = __webpack_require__(197).instanceJoinCreator;
+	var _ = __webpack_require__(195),
+	    maker = __webpack_require__(198).instanceJoinCreator;
 
 	/**
 	 * Extract child listenables from a parent from their
@@ -23916,7 +23968,7 @@
 
 
 /***/ },
-/* 194 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate) {exports.capitalize = function(string){
@@ -23977,7 +24029,7 @@
 	    return typeof value === 'function';
 	};
 
-	exports.EventEmitter = __webpack_require__(196);
+	exports.EventEmitter = __webpack_require__(197);
 
 	if (env.hasSetImmediate) {
 	    exports.nextTick = function(callback) {
@@ -24017,10 +24069,10 @@
 	    }
 	};
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(195).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(196).setImmediate))
 
 /***/ },
-/* 195 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(3).nextTick;
@@ -24099,10 +24151,10 @@
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(195).setImmediate, __webpack_require__(195).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(196).setImmediate, __webpack_require__(196).clearImmediate))
 
 /***/ },
-/* 196 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24370,7 +24422,7 @@
 
 
 /***/ },
-/* 197 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24378,8 +24430,8 @@
 	 */
 
 	var slice = Array.prototype.slice,
-	    _ = __webpack_require__(194),
-	    createStore = __webpack_require__(198),
+	    _ = __webpack_require__(195),
+	    createStore = __webpack_require__(199),
 	    strategyMethodNames = {
 	        strict: "joinStrict",
 	        first: "joinLeading",
@@ -24482,14 +24534,14 @@
 
 
 /***/ },
-/* 198 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(194),
-	    Keep = __webpack_require__(199),
-	    mixer = __webpack_require__(200),
+	var _ = __webpack_require__(195),
+	    Keep = __webpack_require__(200),
+	    mixer = __webpack_require__(201),
 	    allowed = {preEmit:1,shouldEmit:1},
-	    bindMethods = __webpack_require__(201);
+	    bindMethods = __webpack_require__(202);
 
 	/**
 	 * Creates an event emitting Data Store. It is mixed in with functions
@@ -24501,9 +24553,9 @@
 	 */
 	module.exports = function(definition) {
 
-	    var StoreMethods = __webpack_require__(202),
-	        PublisherMethods = __webpack_require__(203),
-	        ListenerMethods = __webpack_require__(193);
+	    var StoreMethods = __webpack_require__(203),
+	        PublisherMethods = __webpack_require__(204),
+	        ListenerMethods = __webpack_require__(194);
 
 	    definition = definition || {};
 
@@ -24552,7 +24604,7 @@
 
 
 /***/ },
-/* 199 */
+/* 200 */
 /***/ function(module, exports) {
 
 	exports.createdStores = [];
@@ -24570,10 +24622,10 @@
 
 
 /***/ },
-/* 200 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(194);
+	var _ = __webpack_require__(195);
 
 	module.exports = function mix(def) {
 	    var composed = {
@@ -24633,7 +24685,7 @@
 
 
 /***/ },
-/* 201 */
+/* 202 */
 /***/ function(module, exports) {
 
 	module.exports = function(store, definition) {
@@ -24662,7 +24714,7 @@
 
 
 /***/ },
-/* 202 */
+/* 203 */
 /***/ function(module, exports) {
 
 	/**
@@ -24674,10 +24726,10 @@
 
 
 /***/ },
-/* 203 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(194);
+	var _ = __webpack_require__(195);
 
 	/**
 	 * A module of methods for object that you want to be able to listen to.
@@ -24861,11 +24913,11 @@
 
 
 /***/ },
-/* 204 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(194),
-	    ListenerMethods = __webpack_require__(193);
+	var _ = __webpack_require__(195),
+	    ListenerMethods = __webpack_require__(194);
 
 	/**
 	 * A module meant to be consumed as a mixin by a React component. Supplies the methods from
@@ -24884,7 +24936,7 @@
 
 
 /***/ },
-/* 205 */
+/* 206 */
 /***/ function(module, exports) {
 
 	/**
@@ -24896,13 +24948,13 @@
 
 
 /***/ },
-/* 206 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var _ = __webpack_require__(194),
-	    ActionMethods = __webpack_require__(205),
-	    PublisherMethods = __webpack_require__(203),
-	    Keep = __webpack_require__(199),
+	var _ = __webpack_require__(195),
+	    ActionMethods = __webpack_require__(206),
+	    PublisherMethods = __webpack_require__(204),
+	    Keep = __webpack_require__(200),
 	    allowed = {preEmit:1,shouldEmit:1};
 
 	/**
@@ -24970,12 +25022,12 @@
 
 
 /***/ },
-/* 207 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ListenerMethods = __webpack_require__(193),
-	    ListenerMixin = __webpack_require__(204),
-	    _ = __webpack_require__(194);
+	var ListenerMethods = __webpack_require__(194),
+	    ListenerMixin = __webpack_require__(205),
+	    _ = __webpack_require__(195);
 
 	module.exports = function(listenable,key){
 	    return {
@@ -25003,10 +25055,10 @@
 
 
 /***/ },
-/* 208 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ListenerMethods = __webpack_require__(193);
+	var ListenerMethods = __webpack_require__(194);
 
 	/**
 	 * A mixin factory for a React component. Meant as a more convenient way of using the `ListenerMixin`,
@@ -25044,10 +25096,10 @@
 
 
 /***/ },
-/* 209 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ListenerMethods = __webpack_require__(193);
+	var ListenerMethods = __webpack_require__(194);
 
 	/**
 	 * A mixin factory for a React component. Meant as a more convenient way of using the `listenerMixin`,
@@ -25083,14 +25135,42 @@
 
 
 /***/ },
-/* 210 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _whatwgFetch = __webpack_require__(211);
+	var _reflux = __webpack_require__(191);
+
+	var _reflux2 = _interopRequireDefault(_reflux);
+
+	var _utilsApiJsx = __webpack_require__(212);
+
+	var _utilsApiJsx2 = _interopRequireDefault(_utilsApiJsx);
+
+	var _actionsJsx = __webpack_require__(190);
+
+	var _actionsJsx2 = _interopRequireDefault(_actionsJsx);
+
+	module.exports = _reflux2['default'].createStore({
+	  listenables: [_actionsJsx2['default']], //if any actions get called and you have a method with the same call, call the method
+	  isLoggedIn: function isLoggedIn() {
+	    var cookie = document.cookie.slice(0, 4) || "";
+	    return cookie === 'user';
+	  }
+	});
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var _whatwgFetch = __webpack_require__(213);
 
 	var _whatwgFetch2 = _interopRequireDefault(_whatwgFetch);
 
@@ -25109,7 +25189,7 @@
 	//the api like Api.get('images')
 
 /***/ },
-/* 211 */
+/* 213 */
 /***/ function(module, exports) {
 
 	(function() {
@@ -25443,86 +25523,6 @@
 	  self.fetch.polyfill = true
 	})();
 
-
-/***/ },
-/* 212 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _reflux = __webpack_require__(190);
-
-	var _reflux2 = _interopRequireDefault(_reflux);
-
-	module.exports = _reflux2['default'].createActions(['getLogin', 'isLoggedIn']);
-
-/***/ },
-/* 213 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _actionsJsx = __webpack_require__(212);
-
-	var _actionsJsx2 = _interopRequireDefault(_actionsJsx);
-
-	var _storesTestJsx = __webpack_require__(189);
-
-	var _storesTestJsx2 = _interopRequireDefault(_storesTestJsx);
-
-	var _reflux = __webpack_require__(190);
-
-	var _reflux2 = _interopRequireDefault(_reflux);
-
-	var _reactRouter = __webpack_require__(158);
-
-	module.exports = _react2['default'].createClass({
-	  displayName: 'exports',
-
-	  mixins: [_reflux2['default'].listenTo(_storesTestJsx2['default'], 'onChange')],
-	  getInitialState: function getInitialState() {
-	    return {
-	      login: []
-	    };
-	  },
-	  componentWillMount: function componentWillMount() {
-	    // Actions.getLogin();
-	  },
-	  render: function render() {
-	    return _react2['default'].createElement(
-	      'div',
-	      null,
-	      'Login Page',
-	      this.renderLogin()
-	    );
-	  },
-	  renderLogin: function renderLogin() {
-	    return _react2['default'].createElement(
-	      'div',
-	      null,
-	      _react2['default'].createElement(
-	        'a',
-	        { href: '/auth/github' },
-	        'Login with Github'
-	      )
-	    );
-	  },
-	  onChange: function onChange(event, login) {
-	    this.setState({ login: login });
-	  },
-	  getLoginInfo: function getLoginInfo() {
-	    console.log("calling login info");
-	    _actionsJsx2['default'].getLogin();
-	  }
-	});
 
 /***/ }
 /******/ ]);
